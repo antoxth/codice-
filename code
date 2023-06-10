@@ -1,0 +1,95 @@
+
+//prototipi
+void lettura(char**&,int&,int&);
+void stampa(char**,int,int);
+void vocali(char**,int,int,char*,int&,char*,int&);
+void stampa_vettore(char*,int);
+
+
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    char **mat, *vet_voc, *vet_con;
+    int rig, col, rie_voc, rie_con;
+    
+    lettura(mat, rig, col);
+    stampa(mat, rig, col);
+    vocali(mat, rig, col, vet_voc, rie_voc, vet_con, rie_con);
+
+    for (int i = 0; i < rig; i++)
+        delete[] mat[i];
+    
+    delete[] mat;
+    delete[] vet_voc;
+    delete[] vet_con;
+    
+    return 0;
+    
+}
+//prototipi
+void lettura(char **&mat,int &rig,int &col){
+    cout<<"inserire il numero di righe delle matrici: ";
+    cin>>rig;
+    cout<<"inserire il numero di colonne delle matrice: ";
+    cin>>col;
+    
+    mat= new char*[rig];
+    for (int i=0; i<rig; i++ ){
+        mat[i]=new char[col];
+    }
+    
+    for(int i=0;i<rig;i++){
+        cout<<"Inserire la riga "; cout<<i; cout<<endl;
+        for(int j=0;j<col;j++){
+        cin>>mat[i][j];
+        }
+    }
+}
+
+void stampa(char **mat,int rig,int col){
+    for(int i=0;i<rig;i++){
+        cout<<endl;
+        for(int j=0;j<col;j++){
+        cout<<mat[i][j]; cout<<"  ";
+        }
+    }
+}
+
+
+void vocali(char **mat,int rig,int col,char *vet_voc,int &rie_voc,char *vet_con,int &rie_con){
+    vet_voc=new char [rig*col+1];
+    vet_con=new char [rig*col];
+    
+    rie_voc=0;
+    rie_con=0;
+    
+    for(int i=0;i<rig;i++){
+        for(int j=0;j<col;j++){
+            if(mat[i][j]=='a'||mat[i][j]=='e'||mat[i][j]=='i'||mat[i][j]=='o'||mat[i][j]=='u'){
+                vet_voc[rie_voc]=mat[i][j];
+                rie_voc++;
+            }
+            
+            else{
+                 vet_con[rie_con]=mat[i][j];
+                 rie_con++;
+            }
+        }
+    }
+
+    
+    cout<<"\n stampa del vettore vocali: "; cout<<endl;
+    stampa_vettore(vet_voc,rie_voc);
+    cout<<"\n stampa del vettore consonanti: "; cout<<endl;
+    stampa_vettore(vet_con,rie_con);
+    
+}
+
+void stampa_vettore(char *vet,int riemp){
+    for(int i=0;i<riemp;i++){
+        cout<<vet[i]; cout<<"  ";
+    }
+}
